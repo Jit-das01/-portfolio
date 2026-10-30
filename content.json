@@ -1,0 +1,151 @@
+{
+  "name": "Jit Das",
+  "tagline": "Data Science · Full-Stack · Talent Acquisition",
+  "status": "Open to opportunities · 2026",
+  "roles": ["🤖 AI / ML Engineer", "⚙️ Full-Stack Developer", "👥 Hiring Manager · TA Lead", "📍 Kolkata, India"],
+  "intro": "BCA student at Techno India University (2023–27) building at the intersection of AI, full-stack engineering, and human capital — with real enterprise impact across iMerit Technology, EpochFolio RPO, and beyond.",
+  "stats": [
+    { "value": 7, "suffix": "+", "label": "Live Projects" },
+    { "value": 18, "suffix": "", "label": "TA Execs Led" },
+    { "value": 93, "suffix": "%", "label": "Placement Rate" },
+    { "value": 10, "suffix": "", "label": "Candidates Placed" },
+    { "value": 8.5, "suffix": "", "label": "CGPA", "decimals": 2 }
+  ],
+  "badges": ["⚽ Football Captain", "🏛 Alpha Society", "🚀 Geek Ignite Summit", "✈ Open to Relocation"],
+  "about": {
+    "heading": "Passionate CS Student & Multi-Domain Professional",
+    "paragraphs": [
+      "I am Jit Das, a passionate and driven Computer Science student at Techno India University, West Bengal, dedicated to building innovative and impactful digital solutions. With hands-on experience in full-stack web development, I work across the spectrum — from crafting responsive frontends with React to architecting robust backends with Node.js and Python.",
+      "My recent project, ESD (Environmental Sustainability Dashboard), reflects my ability to take an idea from concept to completion — combining research, design, and development into a cohesive real-world solution. I thrive at the intersection of technology and problem-solving, bringing dedication, curiosity, and a growth mindset to everything I do.",
+      "At EpochFolio I rose through multiple roles including Hiring Manager and Client Delivery Head, leading 18 TA executives to a 93% placement rate. At iMerit Technology I joined Fortune 500 AI annotation pipelines as the youngest developer on team."
+    ],
+    "education": [
+      { "icon": "🎓", "title": "BCA — Techno India University, Kolkata", "meta": "Batch 2023–2027 · West Bengal", "score": "CGPA: 8.50" },
+      { "icon": "📘", "title": "Class XII — Science (Maths + Computer Science)", "meta": "West Bengal Board", "score": "80%" },
+      { "icon": "📗", "title": "Class X — Secondary Education", "meta": "West Bengal Board", "score": "70%" }
+    ]
+  },
+  "experience": [
+    {
+      "role": "Human Resource Intern", "org": "Coll-Edge Connect", "where": "New Delhi · Remote (Work From Home)", "period": "Jun 2026 – Present", "current": true,
+      "points": [
+        "Selected for HR Intern role at Coll-Edge Connect, a New Delhi-based organisation focused on student and campus engagement",
+        "Overseeing day-to-day activities of team members, ensuring weekly targets are met on time",
+        "Assisting with hiring processes, managing assigned projects, and supporting onboarding of new interns",
+        "Reporting daily work outcomes to designated mentor; attending all scheduled review meetings"
+      ],
+      "tag": "🟢 Currently Active · Joined 20 Jun 2026"
+    },
+    {
+      "role": "Hiring Manager & Client Delivery Head", "org": "EpochFolio Private Limited", "where": "RPO Firm · Kolkata · On-site", "period": "Apr 2026 – Jun 2026",
+      "points": [
+        "Elevated to dual role — Hiring Manager & Client Delivery Head — for the final 2 months of tenure",
+        "Directly owned client accounts at Deloitte, Wipro, TCS, HDFC, Axis Bank, and US Foods",
+        "Coordinated Team A & B on live mandates, conducting pipeline reviews and performance calibrations"
+      ],
+      "tag": "📈 Dual Role · Final 2 Months of Tenure"
+    },
+    {
+      "role": "Internal Recruitment Head", "org": "EpochFolio Private Limited", "where": "RPO Firm · Kolkata · On-site", "period": "Jan 2026 – Jun 2026",
+      "points": [
+        "Promoted from HR Intern → Senior Recruiter → Internal Recruitment Head; appointed by CEO Naitik Joshi",
+        "Led 18 Junior TA Executives (Team A & Team B) across all internal recruitment operations",
+        "Owned RPO delivery for Deloitte, Wipro, TCS, TCI Express, US Foods, HDFC, Axis Bank, and ZUCI Systems",
+        "Placed 10 candidates; achieved 93% placement rate. Screened SFDC, Azure, Java Full Stack, VAPT, Linux, Angular domains",
+        "Built Excel trackers, JC directories, leaderboard dashboards, and a React + Vite HR tool on Vercel"
+      ],
+      "tag": "🏆 Super HR of the Week · Letter of Recommendation"
+    },
+    {
+      "role": "Chief Operating Officer (COO)", "org": "Renu Sharma Healthcare and Education Foundation", "where": "Remote", "period": "Jan 2026 – Jun 2026",
+      "points": [
+        "Appointed by Founder Neha Sharma to manage complete end-to-end operations",
+        "Managed the entire Internshala database — intern pipelines, postings, and candidate tracking",
+        "Handled the official LinkedIn page — content strategy, posting, engagement, and professional branding",
+        "Oversaw HR, recruitment, onboarding, and cross-functional coordination across departments"
+      ]
+    },
+    {
+      "role": "Data Science Intern (Contract Renewed)", "org": "iMerit Technology Services Pvt. Ltd.", "where": "Kolkata · On-site · Ref: CONSLT/HRT/749/26", "period": "Jan 2026 – Jun 2026",
+      "points": [
+        "Youngest developer on team; collaborated on Fortune 500 AI data science & annotation pipelines",
+        "Conducted EDA on large unstructured datasets using Python, Matplotlib, Seaborn on Ango Hub platform",
+        "Contract renewed by CFO Tapishnu Chaudhuri on the basis of performance"
+      ],
+      "tag": "📄 Youngest Developer · Contract Renewed"
+    },
+    {
+      "role": "Senior Data Entry Specialist", "org": "Relink Talent Solutions", "where": "Remote", "period": "Feb 2026 – May 2026",
+      "points": [
+        "Managed and maintained accurate data records across company systems with zero-error standards",
+        "Verified, reviewed, and resolved data inconsistencies across documentation"
+      ]
+    },
+    {
+      "role": "Python & Data Science Virtual Intern", "org": "Techno Billion AI", "where": "Remote", "period": "Dec 2025 – May 2026",
+      "points": ["Covered NumPy, Pandas, data visualization, and statistical analysis applied to real-world datasets"]
+    },
+    {
+      "role": "Campus Ambassador", "org": "Acmegrade Pvt. Ltd.", "where": "Appointed by VP–HR Rupal Kumar Singh", "period": "Feb 2026 – Jun 2026",
+      "points": ["Selected via national competitive process; drove lead generation via digital and social media platforms"]
+    }
+  ],
+  "projects": [
+    { "icon": "🌱", "kind": "Academic · TIU ESD Program", "title": "Environmental Sustainability Dashboard", "sub": "TIU · SOF_BCA · Cohort 2 · Jun 2026", "desc": "Comprehensive sustainability dashboard combining research, design, and development — concept to completion through TIU's structured academic ESD portal.", "stack": ["React", "Node.js", "Python", "HTML/CSS", "JavaScript"], "cats": ["fullstack"], "link": { "label": "Verify Certificate", "url": "https://academy-esd-sub1-qztntyp40-setha4195-1780s-projects.vercel.app/verify/CERT-2025-26-SOF-BCA-PNZEZK" } },
+    { "icon": "🏫", "kind": "Full-Stack · Live · BCA Minor Project", "title": "CampusSync", "sub": "35+ Events · QR Attendance · Team of 5", "desc": "College event management system with QR code pipeline — event creation → QR generation → scan-based check-in → dashboard reporting.", "stack": ["React", "Node.js", "PostgreSQL", "Vercel"], "cats": ["fullstack", "live"], "link": { "label": "Live Demo", "url": "https://campussync-six.vercel.app" } },
+    { "icon": "🕵️", "kind": "AI · Computer Vision · Real-Time", "title": "DeepGuard", "sub": "Zero Dataset · rPPG · Instant Verdict", "desc": "Real-time deepfake detection using rPPG to measure blood flow via webcam. Outputs AUTHENTIC / SUSPICIOUS verdict with zero pre-training.", "stack": ["Python", "MediaPipe", "OpenCV", "rPPG"], "cats": ["ai"] },
+    { "icon": "🔍", "kind": "NLP · CLI Tool · GitHub", "title": "CodeSense", "sub": "94.8% Accuracy · git-triggered · Viral", "desc": "Fine-tuned CodeBERT for binary Python code quality classification, triggered via git commits. Launch post generated thousands of LinkedIn impressions.", "stack": ["CodeBERT", "Transformers", "Python", "Git"], "cats": ["ai"], "link": { "label": "GitHub", "url": "https://github.com/Jit-das01/codesense" } },
+    { "icon": "📊", "kind": "ML · Full-Stack · Dashboard", "title": "CareerIntel Dashboard", "sub": "R² = 0.897 · Gradient Boosting", "desc": "Full-stack AI career intelligence platform. Gradient Boosting model achieves R²=0.897. Dark-mode Chart.js dashboard with Flask backend.", "stack": ["Scikit-learn", "Flask", "Chart.js", "Python"], "cats": ["ai", "fullstack"], "link": { "label": "GitHub", "url": "https://github.com/Jit-das01/career-intel-dashboard" } },
+    { "icon": "🎵", "kind": "PWA · Music Streaming · Live", "title": "RaagFlow", "sub": "Multi-Source API · Offline PWA · React 18", "desc": "Full-featured music streaming PWA with YouTube, SoundCloud, and Jamendo integration. Offline support live on Vercel.", "stack": ["React", "Howler.js", "YouTube API", "Zustand"], "cats": ["fullstack", "live"], "link": { "label": "Live", "url": "https://raagflow.vercel.app" } },
+    { "icon": "🤖", "kind": "AI Chatbot · PWA · Medical", "title": "ZOE 2.0", "sub": "Voice I/O · Gemini API · Hands-Free", "desc": "AI medical chatbot with Gemini API, voice I/O via Web Speech, PWA support, and hands-free UX on FastAPI + React.", "stack": ["Gemini API", "FastAPI", "React", "Web Speech"], "cats": ["ai", "fullstack"], "link": { "label": "GitHub", "url": "https://github.com/Jit-das01/zoemedical-ai-chatbot" } }
+  ],
+  "skills": [
+    { "group": "AI / Machine Learning", "items": ["Machine Learning", "Deep Learning", "NLP", "Computer Vision", "rPPG", "BERT / DistilBERT", "SegFormer", "Gradient Boosting", "Scikit-learn", "Gemini API", "MediaPipe", "Ango Hub", "LLMs"] },
+    { "group": "Programming Languages", "items": ["Python", "JavaScript (ES6+)", "Java", "C", "C++", "HTML5", "CSS3", "SQL"] },
+    { "group": "CS Fundamentals", "items": ["Data Structures & Algorithms", "Operating Systems", "Computer Architecture", "Object-Oriented Programming"] },
+    { "group": "Frameworks & Tools", "items": ["React", "Node.js", "FastAPI", "Flask", "PostgreSQL", "NumPy", "Pandas", "Matplotlib / Seaborn", "Chart.js", "Tableau", "Howler.js", "Zustand"] },
+    { "group": "DevOps & Cloud", "items": ["Git / GitHub", "Vercel", "Render", "Replit", "GCP", "GitHub Copilot"] },
+    { "group": "HR / Talent Acquisition", "items": ["End-to-End Recruitment", "RPO Delivery", "Hiring Manager", "Client Delivery", "Team Leadership", "Candidate Mapping", "ATS Systems", "Internshala Management", "LinkedIn Branding", "JD Screening"] }
+  ],
+  "availability": [
+    { "label": "Notice Period", "value": "Immediate", "sub": "Available to join at once" },
+    { "label": "Preferred Roles", "value": "Internship / Full-Time", "sub": "Data Science · Full-Stack · TA" },
+    { "label": "Willing to Relocate", "value": "Yes", "sub": "Pan-India + Remote" },
+    { "label": "References", "value": "Available", "sub": "EpochFolio CEO · iMerit CFO — on request via email" }
+  ],
+  "contact": {
+    "email": "jeet2005das28@gmail.com",
+    "linkedin": "https://linkedin.com/in/jitdas01",
+    "github": "https://github.com/Jit-das01",
+    "githubUser": "Jit-das01",
+    "location": "Kolkata, West Bengal, India",
+    "phone": "",
+    "showPhone": false
+  },
+  "credentials": [
+    { "id": "esd", "category": "certificate", "icon": "🌱", "title": "Entrepreneurship Skill Development (ESD)", "issuer": "Techno India University · SOF_BCA · Cohort 2", "date": "12 Jun 2026", "credentialId": "CERT-2025-26-SOF-BCA-PNZEZK", "verifyUrl": "https://academy-esd-sub1-qztntyp40-setha4195-1780s-projects.vercel.app/verify/CERT-2025-26-SOF-BCA-PNZEZK" },
+    { "id": "walmart", "category": "certificate", "icon": "🏢", "title": "Advanced Software Engineering", "issuer": "Walmart Global Tech / Forage", "date": "Apr 2026" },
+    { "id": "deloitte", "category": "certificate", "icon": "📊", "title": "Data Analytics Job Simulation", "issuer": "Deloitte / Forage", "date": "Apr 2026" },
+    { "id": "hp-agile", "category": "certificate", "icon": "⚡", "title": "Agile Project Management", "issuer": "HP LIFE / HP Foundation", "date": "Apr 2026" },
+    { "id": "hp-ds", "category": "certificate", "icon": "🔬", "title": "Data Science & Analytics", "issuer": "HP LIFE / HP Foundation", "date": "Apr 2026" },
+    { "id": "saylor-ml", "category": "certificate", "icon": "🤖", "title": "CS207: Fundamentals of Machine Learning", "issuer": "Saylor Academy", "date": "Dec 2025" },
+    { "id": "saylor-se", "category": "certificate", "icon": "💻", "title": "CS302: Software Engineering", "issuer": "Saylor Academy", "date": "Dec 2025" },
+    { "id": "google-analytics", "category": "certificate", "icon": "📈", "title": "Google Analytics Certification", "issuer": "Google Skillshop", "date": "Sep 2025 – Sep 2026" },
+    { "id": "genai-studio", "category": "certificate", "icon": "☁️", "title": "Intro to Generative AI Studio", "issuer": "Google Cloud / Simplilearn", "date": "Sep 2025" },
+    { "id": "copilot", "category": "certificate", "icon": "🔧", "title": "Prompt Engineering with GitHub Copilot", "issuer": "Microsoft / Simplilearn", "date": "Sep 2025" },
+    { "id": "lor", "category": "letter", "icon": "📜", "title": "Letter of Recommendation", "issuer": "EpochFolio Private Limited · Issued by CEO Naitik Joshi", "date": "Jun 2026" },
+    { "id": "super-hr", "category": "award", "icon": "🏆", "title": "Super HR of the Week", "issuer": "EpochFolio Private Limited · Awarded by Founder & Co-Founder", "date": "Mar 2026" },
+    { "id": "appreciation", "category": "letter", "icon": "⭐", "title": "Appreciation Letter", "issuer": "EpochFolio Private Limited · Internal Recruitment Head", "date": "Jun 2026" },
+    { "id": "offer-colledge", "category": "offer", "icon": "✉️", "title": "Offer Letter — HR Intern", "issuer": "Coll-Edge Connect", "date": "Jun 2026", "placeholder": true },
+    { "id": "offer-imerit", "category": "offer", "icon": "✉️", "title": "Contract / Renewal Letter — Data Science Intern", "issuer": "iMerit Technology Services (Ref: CONSLT/HRT/749/26)", "date": "2026", "placeholder": true },
+    { "id": "offer-epochfolio", "category": "offer", "icon": "✉️", "title": "Appointment Letter — Internal Recruitment Head", "issuer": "EpochFolio Private Limited", "date": "Jan 2026", "placeholder": true },
+    { "id": "offer-renu", "category": "offer", "icon": "✉️", "title": "Appointment Letter — COO", "issuer": "Renu Sharma Healthcare and Education Foundation", "date": "Jan 2026", "placeholder": true },
+    { "id": "offer-acmegrade", "category": "offer", "icon": "✉️", "title": "Campus Ambassador Letter", "issuer": "Acmegrade Pvt. Ltd.", "date": "Feb 2026", "placeholder": true }
+  ],
+  "suggestions": [
+    "What has Jit built with AI?",
+    "Show me his certificates",
+    "Tell me about his leadership experience",
+    "Is Jit available to join?"
+  ]
+}

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin — Jit Das Portfolio</title>
+<style>
+:root{--navy:#050A1A;--card:#0D1628;--cyan:#00E5FF;--purple:#7B2FFF;--gold:#FFB400;--green:#00E676;--red:#ff6b6b;--text:#E8ECF4;--muted:#8892A4;--border:rgba(0,229,255,.16)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy);color:var(--text);font:15px/1.55 Inter,system-ui,sans-serif;min-height:100vh;padding:24px 16px 80px}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:1.5rem}h2{font-size:1.1rem;margin-bottom:12px;color:var(--cyan)}
+a{color:var(--cyan)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:18px}
+input,select{width:100%;background:#060d1d;border:1px solid var(--border);border-radius:10px;color:var(--text);padding:10px 12px;font:inherit;outline:none}
+input:focus,select:focus{border-color:var(--cyan)}
+label{display:block;font-size:.78rem;color:var(--muted);margin:10px 0 4px;letter-spacing:.04em}
+button{font:inherit;cursor:pointer;border-radius:999px;border:1px solid var(--cyan);background:rgba(0,229,255,.1);color:var(--cyan);padding:8px 18px;font-weight:600}
+button:hover{background:rgba(0,229,255,.2)}
+button.pri{background:linear-gradient(90deg,#6a3df0,#18b8e8);color:#fff;border-color:transparent}
+button.danger{border-color:var(--red);color:var(--red);background:rgba(255,107,107,.08)}
+button:disabled{opacity:.5;cursor:wait}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.g2{grid-template-columns:1fr}}
+.top{display:flex;align-items:center;gap:14px;margin-bottom:18px}.top .sp{flex:1}
+.msg{padding:10px 14px;border-radius:10px;margin-bottom:14px;font-size:.9rem;display:none}
+.msg.ok{display:block;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.4);color:var(--green)}
+.msg.err{display:block;background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.4);color:var(--red)}
+.prev{width:120px;height:120px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid var(--cyan)}
+.item{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:#0a1324}
+.item .t{flex:1;min-width:0}.item .t b{display:block}.item small{color:var(--muted)}
+.pill{font-size:.68rem;padding:2px 9px;border-radius:999px;border:1px solid var(--border);color:var(--muted);margin-left:6px;white-space:nowrap}
+.pill.ok{color:var(--green);border-color:rgba(0,230,118,.4)}.pill.todo{color:var(--gold);border-color:rgba(255,180,0,.4)}
+.item button{padding:5px 12px;font-size:.8rem}
+.hint{font-size:.8rem;color:var(--muted);margin-top:8px}
+.warn{background:rgba(255,180,0,.08);border:1px solid rgba(255,180,0,.35);color:#ffd886;border-radius:10px;padding:10px 14px;font-size:.84rem;margin-top:10px}
+canvas#red{max-width:100%;border:1px solid var(--border);border-radius:10px;cursor:crosshair;touch-action:none;display:none;margin-top:10px}
+.hide{display:none!important}
+#setup li{margin:4px 0 4px 18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="login" class="card" style="max-width:420px;margin:12vh auto 0">
+  <h1>🔐 Admin login</h1>
+  <p class="hint" style="margin-bottom:6px">Only Jit can manage the portfolio from here.</p>
+  <div id="m-login" class="msg"></div>
+  <label for="pw">Password</label>
+  <input type="password" id="pw" autocomplete="current-password">
+  <div class="row" style="margin-top:14px"><button class="pri" id="btn-login">Log in</button><a href="/" class="hint" style="margin:0">← Back to site</a></div>
+  <ul id="setup" class="hint hide"></ul>
+</div>
+
+<div id="app" class="hide">
+  <div class="top"><h1>Portfolio admin</h1><span class="sp"></span><a href="/" target="_blank">View site ↗</a><button id="btn-out">Log out</button></div>
+  <div id="m-app" class="msg"></div>
+
+  <div class="card">
+    <h2>Display photo</h2>
+    <div class="row">
+      <img id="cur-photo" class="prev" src="/photo.jpg" alt="">
+      <div style="flex:1;min-width:220px">
+        <input type="file" id="photo-file" accept="image/jpeg,image/png,image/webp">
+        <div class="row" style="margin-top:10px"><button class="pri" id="btn-photo">Upload & use as my photo</button><button id="btn-photo-reset">Back to default</button></div>
+        <p class="hint">The image is cropped to a square automatically. It updates the hero, About section and chatbot within seconds.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Add or update a document</h2>
+    <p class="hint" style="margin:-6px 0 8px">Certificates, offer letters, appointment letters, awards — and your CV (category “CV” powers the Download CV button).</p>
+    <input type="hidden" id="f-id">
+    <div class="g2">
+      <div><label>Title *</label><input type="text" id="f-title" placeholder="Offer Letter — HR Intern"></div>
+      <div><label>Issued by</label><input type="text" id="f-issuer" placeholder="Coll-Edge Connect"></div>
+      <div><label>Date</label><input type="text" id="f-date" placeholder="Jun 2026"></div>
+      <div><label>Category</label>
+        <select id="f-cat"><option value="certificate">Certificate</option><option value="offer">Offer / appointment letter</option><option value="letter">Recommendation / appreciation letter</option><option value="award">Award</option><option value="cv">CV (Download button)</option></select></div>
+    </div>
+    <label>Verification link (optional)</label><input type="url" id="f-verify" placeholder="https://…">
+    <label>File (PDF or image, max ~3 MB)</label><input type="file" id="f-file" accept="application/pdf,image/jpeg,image/png,image/webp">
+    <canvas id="red"></canvas>
+    <div id="red-tools" class="row hide" style="margin-top:8px"><button id="red-undo" type="button">Undo box</button><button id="red-clear" type="button">Clear</button><span class="hint" style="margin:0">Drag over salary, phone numbers or address to black them out before upload.</span></div>
+    <div id="pdf-warn" class="warn hide">PDFs are uploaded exactly as they are, and anyone can read them. Before uploading an offer letter, remove or black out salary, phone numbers and your home address (you can export a redacted PDF, or screenshot it and upload the image — the blackout tool works on images).</div>
+    <div class="row" style="margin-top:14px"><button class="pri" id="btn-save">Save document</button><button id="btn-clear-form" type="button">Clear form</button></div>
+  </div>
+
+  <div class="card">
+    <h2>All documents</h2>
+    <p class="hint" style="margin:-6px 0 12px"><span class="pill todo">to upload</span> items stay hidden from visitors until you attach a file. Everything else shows on the public site.</p>
+    <div id="list"></div>
+  </div>
+
+  <div class="card">
+    <h2>Change password</h2>
+    <div class="g2"><div><label>Current password</label><input type="password" id="pw-cur" autocomplete="current-password"></div><div><label>New password (min 10 characters)</label><input type="password" id="pw-new" autocomplete="new-password"></div></div>
+    <div class="row" style="margin-top:14px"><button class="pri" id="btn-pw">Change password</button></div>
+    <p class="hint">After you change it here, the password set in Vercel is no longer used for login.</p>
+  </div>
+</div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let TOKEN=sessionStorage.getItem('adm')||'';
+let DOCS=[];
+const CAT={certificate:'Certificate',offer:'Offer / appointment',letter:'Letter',award:'Award',cv:'CV'};
+
+async function api(action,payload={}){
+  const r=await fetch('/api/admin',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action,token:TOKEN,...payload})});
+  let j={};try{j=await r.json()}catch(e){}
+  if(r.status===401&&action!=='login'&&action!=='changePassword'){logout();throw new Error('Session expired — please log in again.');}
+  if(!r.ok)throw new Error(j.error||'Request failed');
+  return j;
+}
+function say(id,text,ok){const m=$(id);m.className='msg '+(ok?'ok':'err');m.textContent=text;if(ok)setTimeout(()=>{m.className='msg'},4000);}
+function logout(){TOKEN='';sessionStorage.removeItem('adm');$('#app').classList.add('hide');$('#login').classList.remove('hide');}
+
+async function init(){
+  try{
+    const s=await api('status');const c=s.configured;const todo=[];
+    if(!c.password)todo.push('Add ADMIN_PASSWORD in Vercel → Settings → Environment Variables');
+    if(!c.blob)todo.push('Connect Vercel Blob storage (Vercel → Storage → Create → Blob → Connect to project)');
+    if(!c.ai)todo.push('Add ANTHROPIC_API_KEY so the AI chatbot works (optional for admin)');
+    if(todo.length){const u=$('#setup');u.classList.remove('hide');u.innerHTML='<b>Setup still needed:</b>'+todo.map(t=>`<li>${esc(t)}</li>`).join('');}
+  }catch(e){}
+  if(TOKEN){try{await load();$('#login').classList.add('hide');$('#app').classList.remove('hide');}catch(e){logout();}}
+}
+$('#btn-login').onclick=async()=>{
+  $('#btn-login').disabled=true;
+  try{const j=await api('login',{password:$('#pw').value});TOKEN=j.token;sessionStorage.setItem('adm',TOKEN);$('#pw').value='';await load();$('#login').classList.add('hide');$('#app').classList.remove('hide');}
+  catch(e){say('#m-login',e.message,false);}
+  $('#btn-login').disabled=false;
+};
+$('#pw').onkeydown=e=>{if(e.key==='Enter')$('#btn-login').click();};
+$('#btn-out').onclick=logout;
+
+async function load(){
+  const j=await api('list');
+  $('#cur-photo').src=j.photo||'/photo.jpg';
+  DOCS=j.credentials.filter(c=>!c.hidden);
+  renderList();
+}
+function renderList(){
+  $('#list').innerHTML=DOCS.map(c=>`<div class="item"><div style="font-size:1.4rem">${esc(c.icon||'📄')}</div><div class="t"><b>${esc(c.title)}</b><small>${esc(c.issuer||'')} · ${esc(c.date||'')}</small></div><span class="pill">${esc(CAT[c.category]||c.category)}</span>${c.file?'<span class="pill ok">file ✓</span>':(c.placeholder?'<span class="pill todo">to upload</span>':'<span class="pill">no file</span>')}${c.file?`<a href="${esc(c.file)}" target="_blank"><button>View</button></a>`:''}<button data-edit="${esc(c.id)}">${c.file?'Edit':'Attach file'}</button><button class="danger" data-del="${esc(c.id)}">Delete</button></div>`).join('')||'<p class="hint">Nothing yet.</p>';
+}
+$('#list').onclick=async e=>{
+  const ed=e.target.closest('[data-edit]'),dl=e.target.closest('[data-del]');
+  if(ed){const c=DOCS.find(x=>x.id===ed.dataset.edit);$('#f-id').value=c.id;$('#f-title').value=c.title||'';$('#f-issuer').value=c.issuer||'';$('#f-date').value=c.date||'';$('#f-cat').value=c.category||'certificate';$('#f-verify').value=c.verifyUrl||'';$('#f-file').value='';resetRed();scrollTo({top:$('#f-title').offsetTop-80,behavior:'smooth'});}
+  if(dl){const c=DOCS.find(x=>x.id===dl.dataset.del);if(!confirm(`Delete “${c.title}” from the public site?`))return;
+    try{const j=await api('deleteCredential',{id:c.id});DOCS=j.credentials.filter(x=>!x.hidden);renderList();say('#m-app','Deleted.',true);}catch(err){say('#m-app',err.message,false);}}
+};
+
+/* ---- image helpers ---- */
+function loadImage(file){return new Promise((res,rej)=>{const u=URL.createObjectURL(file);const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error('Could not read that image'));i.src=u;});}
+function fileToDataUrl(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(new Error('Could not read file'));r.readAsDataURL(file);});}
+
+$('#btn-photo').onclick=async()=>{
+  const f=$('#photo-file').files[0];if(!f)return say('#m-app','Choose a photo first.',false);
+  $('#btn-photo').disabled=true;
+  try{
+    const img=await loadImage(f);const s=Math.min(img.width,img.height);const out=Math.min(800,s);
+    const c=document.createElement('canvas');c.width=c.height=out;
+    c.getContext('2d').drawImage(img,(img.width-s)/2,(img.height-s)*0.25,s,s,0,0,out,out);
+    const j=await api('setPhoto',{dataUrl:c.toDataURL('image/jpeg',.88)});
+    $('#cur-photo').src=j.photo;say('#m-app','Photo updated. Refresh the site to see it.',true);
+  }catch(e){say('#m-app',e.message,false);}
+  $('#btn-photo').disabled=false;
+};
+$('#btn-photo-reset').onclick=async()=>{try{await api('resetPhoto');$('#cur-photo').src='/photo.jpg';say('#m-app','Back to the default photo.',true);}catch(e){say('#m-app',e.message,false);}};
+
+/* ---- redaction ---- */
+const cv=$('#red');let RIMG=null,BOX=[],K=1,drag=null;
+function resetRed(){RIMG=null;BOX=[];cv.style.display='none';$('#red-tools').classList.add('hide');$('#pdf-warn').classList.add('hide');}
+function drawRed(){const x=cv.getContext('2d');x.clearRect(0,0,cv.width,cv.height);x.drawImage(RIMG,0,0,cv.width,cv.height);x.fillStyle='#000';BOX.concat(drag?[drag]:[]).forEach(b=>x.fillRect(b.x*K,b.y*K,b.w*K,b.h*K));}
+$('#f-file').onchange=async()=>{
+  resetRed();const f=$('#f-file').files[0];if(!f)return;
+  if(f.type==='application/pdf'){$('#pdf-warn').classList.remove('hide');return;}
+  try{RIMG=await loadImage(f);const w=Math.min(860,RIMG.width);K=w/RIMG.width;cv.width=w;cv.height=Math.round(RIMG.height*K);cv.style.display='block';$('#red-tools').classList.remove('hide');drawRed();}catch(e){say('#m-app',e.message,false);}
+};
+function pos(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*(cv.width/r.width)/K,y:(e.clientY-r.top)*(cv.height/r.height)/K};}
+cv.onpointerdown=e=>{cv.setPointerCapture(e.pointerId);const p=pos(e);drag={sx:p.x,sy:p.y,x:p.x,y:p.y,w:0,h:0};};
+cv.onpointermove=e=>{if(!drag)return;const p=pos(e);drag.x=Math.min(drag.sx,p.x);drag.y=Math.min(drag.sy,p.y);drag.w=Math.abs(p.x-drag.sx);drag.h=Math.abs(p.y-drag.sy);drawRed();};
+cv.onpointerup=()=>{if(drag&&drag.w>4&&drag.h>4)BOX.push({x:drag.x,y:drag.y,w:drag.w,h:drag.h});drag=null;drawRed();};
+$('#red-undo').onclick=()=>{BOX.pop();drawRed();};$('#red-clear').onclick=()=>{BOX=[];drawRed();};
+function exportRedacted(){
+  const m=Math.max(RIMG.width,RIMG.height),s=Math.min(1,1800/m);
+  const c=document.createElement('canvas');c.width=Math.round(RIMG.width*s);c.height=Math.round(RIMG.height*s);
+  const x=c.getContext('2d');x.drawImage(RIMG,0,0,c.width,c.height);x.fillStyle='#000';BOX.forEach(b=>x.fillRect(b.x*s,b.y*s,b.w*s,b.h*s));
+  return c.toDataURL('image/jpeg',.85);
+}
+
+$('#btn-clear-form').onclick=()=>{['f-id','f-title','f-issuer','f-date','f-verify'].forEach(i=>$('#'+i).value='');$('#f-cat').value='certificate';$('#f-file').value='';resetRed();};
+$('#btn-save').onclick=async()=>{
+  const title=$('#f-title').value.trim();if(!title)return say('#m-app','Title is required.',false);
+  $('#btn-save').disabled=true;
+  try{
+    const p={id:$('#f-id').value||undefined,title,issuer:$('#f-issuer').value,date:$('#f-date').value,category:$('#f-cat').value,verifyUrl:$('#f-verify').value};
+    const f=$('#f-file').files[0];
+    if(f){
+      if(f.type==='application/pdf'){if(f.size>3*1024*1024)throw new Error('PDF is over 3 MB — compress it first (e.g. with smallpdf.com).');p.file={dataUrl:await fileToDataUrl(f)};}
+      else p.file={dataUrl:exportRedacted()};
+    }
+    const j=await api('saveCredential',p);
+    DOCS=j.credentials.filter(c=>!c.hidden);renderList();$('#btn-clear-form').click();say('#m-app','Saved — it is live on your site now.',true);
+  }catch(e){say('#m-app',e.message,false);}
+  $('#btn-save').disabled=false;
+};
+
+$('#btn-pw').onclick=async()=>{
+  try{const j=await api('changePassword',{current:$('#pw-cur').value,next:$('#pw-new').value});TOKEN=j.token;sessionStorage.setItem('adm',TOKEN);$('#pw-cur').value=$('#pw-new').value='';say('#m-app','Password changed.',true);}
+  catch(e){say('#m-app',e.message,false);}
+};
+init();
+</script>
+</body>
+</html>
