@@ -199,6 +199,39 @@ footer{padding:36px 0 110px;text-align:center;color:var(--muted);font-size:.82re
 #cform button{border:0;border-radius:999px;padding:0 18px;font-weight:600;background:var(--cyan);color:#041018}
 .note{font-size:.68rem;color:var(--muted);text-align:center;padding:0 12px 8px}
 @media(max-width:520px){#chat{right:0;bottom:0;width:100vw;height:100svh;border-radius:0}}
+
+/* admin / edit mode */
+.nav-admin{border-color:rgba(255,180,0,.4);color:#ffd886}
+.dlg{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);width:min(580px,100%);max-height:92vh;overflow:auto;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.dlg h3{font-size:1.25rem;margin-bottom:4px}.dlg .sub2{color:var(--muted);font-size:.88rem;margin-bottom:8px}
+.dlg label{display:block;font-size:.78rem;color:var(--muted);margin:12px 0 4px}
+.dlg .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:560px){.dlg .g2{grid-template-columns:1fr}}
+.dlg input[type=file]{font-size:.85rem;color:var(--muted)}
+.fmsg{display:none;padding:10px 14px;border-radius:10px;font-size:.88rem;margin:10px 0}
+.fmsg.err{display:block;background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.4);color:#ff9a9a}
+.fmsg.warn{display:block;background:rgba(255,180,0,.08);border:1px solid rgba(255,180,0,.35);color:#ffd886}
+.drow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.redwrap canvas{max-width:100%;border:1px solid var(--border);border-radius:10px;cursor:crosshair;touch-action:none;display:none;margin-top:10px}
+.hint2{font-size:.76rem;color:var(--muted);margin-top:6px}
+#editbar{position:fixed;left:16px;bottom:16px;z-index:85;max-width:min(600px,calc(100vw - 32px));background:var(--card);border:1px solid var(--gold);border-radius:16px;padding:10px 12px;display:none;flex-wrap:wrap;gap:8px;align-items:center;box-shadow:0 18px 50px rgba(0,0,0,.55)}
+body.editing #editbar{display:flex}
+#editbar>b{color:var(--gold);font-size:.84rem;margin-right:4px}
+.eb{border:1px solid var(--border2);background:rgba(0,229,255,.07);color:var(--cyan);border-radius:999px;padding:5px 12px;font-size:.78rem;font-weight:600}
+.eb:hover{background:rgba(0,229,255,.18)}.eb.warn{border-color:var(--gold);color:var(--gold);background:rgba(255,180,0,.08)}
+.chipx{font-size:.7rem;padding:2px 9px;border-radius:999px;border:1px solid var(--border)}
+.chipx.ok{color:var(--green);border-color:rgba(0,230,118,.4)}.chipx.no{color:#ff8a8a;border-color:rgba(255,107,107,.45)}
+@media(max-width:520px){#editbar{left:8px;right:8px;bottom:78px;max-width:none}}
+body.editing [data-f]{outline:1px dashed rgba(255,180,0,.6);outline-offset:3px;border-radius:4px;cursor:text}
+body.editing [data-f]:focus{outline:2px solid var(--gold);background:rgba(255,180,0,.08)}
+.cam{display:none;position:absolute;z-index:6;right:-14px;bottom:0}
+body.editing .cam{display:inline-flex;background:var(--card);border-color:var(--gold);color:var(--gold)}
+#add-doc{display:none;margin:-10px 0 18px}body.editing #add-doc{display:inline-flex}
+.cred.ghost{border-style:dashed;border-color:rgba(255,180,0,.45)}
+.mini.danger{border-color:rgba(255,107,107,.5);color:#ff9a9a;background:rgba(255,107,107,.07)}
+.ghostnote{font-size:.72rem;color:var(--gold)}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:200;background:#0f1d38;border:1px solid var(--cyan);color:var(--text);padding:10px 18px;border-radius:999px;font-size:.88rem;display:none;max-width:92vw;text-align:center}
+#toast.err{border-color:#ff6b6b;color:#ffb0b0}
+.adm-link{background:none;border:0;color:var(--muted);font-size:.82rem;text-decoration:underline;margin-left:10px}
 </style>
 </head>
 <body>
@@ -209,12 +242,13 @@ footer{padding:36px 0 110px;text-align:center;color:var(--muted);font-size:.82re
   <div class="links">
     <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#credentials">Credentials</a><a href="#contact">Contact</a>
     <button class="kbd-btn" id="open-pal" aria-label="Open command menu">Search or ask <kbd id="kbdhint">Ctrl K</kbd></button>
+    <button class="kbd-btn nav-admin" id="admin-btn">🔐 Admin</button>
   </div>
 </div></nav>
 
 <main>
 <section class="hero" id="home"><div class="wrap">
-  <div class="photo"><img id="photo" src="/photo.jpg" alt="Jit Das"></div>
+  <div class="photo"><img id="photo" src="/photo.jpg" alt="Jit Das"><button class="cam eb" id="cam" type="button">📷 Change</button></div>
   <div class="status"><i></i><span id="status">Open to opportunities</span></div>
   <h1 id="name">Jit Das</h1>
   <p class="tag" id="tagline"></p>
@@ -256,6 +290,7 @@ footer{padding:36px 0 110px;text-align:center;color:var(--muted);font-size:.82re
 
 <section class="sec" id="credentials"><div class="wrap reveal">
   <div class="eyebrow">Verified &amp; open to everyone</div><h2>Credentials, Letters &amp; Offers</h2>
+  <button class="btn primary" id="add-doc" type="button">＋ Add certificate / offer letter</button>
   <div class="filters" id="cfilters"></div>
   <div class="cgrid" id="cgrid"></div>
 </div></section>
@@ -285,7 +320,7 @@ footer{padding:36px 0 110px;text-align:center;color:var(--muted);font-size:.82re
 </div></section>
 </main>
 
-<footer><div class="wrap">© 2026 Jit Das · BCA 2027 · Techno India University · Made with passion from Kolkata</div></footer>
+<footer><div class="wrap">© 2026 Jit Das · BCA 2027 · Techno India University · Made with passion from Kolkata <button class="adm-link" id="adm-foot" type="button">Admin</button></div></footer>
 
 <div class="overlay" id="viewer-ov"><div class="viewer" role="dialog" aria-modal="true">
   <header><h3 id="v-title"></h3><a class="mini" id="v-open" target="_blank" rel="noopener">Open ↗</a><a class="mini" id="v-verify" target="_blank" rel="noopener" style="display:none">Verify ✓</a><button class="x" id="v-close" aria-label="Close">✕</button></header>
@@ -297,6 +332,42 @@ footer{padding:36px 0 110px;text-align:center;color:var(--muted);font-size:.82re
   <div class="plist" id="pal-list"></div>
   <div class="phint"><span>↑↓ navigate</span><span>↵ select</span><span>esc close</span></div>
 </div></div>
+
+
+<div class="overlay" id="login-ov"><div class="dlg" role="dialog" aria-modal="true" aria-label="Admin login" style="max-width:420px">
+  <h3 class="disp">🔐 Admin login</h3><p class="sub2">Only Jit can edit this site.</p>
+  <div class="fmsg" id="login-msg"></div>
+  <label for="login-pw">Password</label><input type="password" id="login-pw" autocomplete="current-password">
+  <div class="drow"><button class="btn primary" id="login-go" type="button">Log in</button><button class="btn" id="login-x" type="button">Cancel</button></div>
+</div></div>
+
+<div class="overlay" id="doc-ov"><div class="dlg" role="dialog" aria-modal="true" aria-label="Add or edit document">
+  <h3 class="disp" id="doc-h">Add document</h3><p class="sub2">Certificates, offer letters, appointment letters, awards, or your CV (category “CV” turns on the Download CV button).</p>
+  <div class="fmsg" id="doc-msg"></div>
+  <input type="hidden" id="d-id">
+  <div class="g2"><div><label>Title *</label><input type="text" id="d-title" placeholder="Offer Letter — HR Intern"></div><div><label>Issued by</label><input type="text" id="d-issuer" placeholder="Company / institute"></div>
+  <div><label>Date</label><input type="text" id="d-date" placeholder="Jun 2026"></div>
+  <div><label>Category</label><select id="d-cat"><option value="certificate">Certificate</option><option value="offer">Offer / appointment letter</option><option value="letter">Recommendation / appreciation letter</option><option value="award">Award</option><option value="cv">CV (Download button)</option></select></div></div>
+  <label>Verification link (optional)</label><input type="url" id="d-verify" placeholder="https://…">
+  <label>File — PDF or image, up to about 3 MB</label><input type="file" id="d-file" accept="application/pdf,image/jpeg,image/png,image/webp">
+  <div class="redwrap"><canvas id="red"></canvas></div>
+  <div id="red-tools" class="drow" style="display:none;margin-top:8px"><button class="eb" id="red-undo" type="button">Undo box</button><button class="eb" id="red-clear" type="button">Clear</button><span class="hint2">Drag over salary, phone numbers or address to black them out before upload.</span></div>
+  <div class="fmsg warn" id="pdf-warn" style="display:none">PDFs upload exactly as they are and everyone can read them. Remove or black out salary, phone numbers and your address first — or upload a screenshot/photo of the letter, where the blackout tool works.</div>
+  <div class="drow"><button class="btn primary" id="d-save" type="button">Save</button><button class="btn" id="d-cancel" type="button">Cancel</button></div>
+</div></div>
+
+<input type="file" id="photo-in" accept="image/jpeg,image/png,image/webp" style="display:none">
+<div id="editbar"><b>✏️ Edit mode</b>
+  <button class="eb" id="eb-photo" type="button">📷 Change photo</button>
+  <button class="eb" id="eb-add" type="button">＋ Add document</button>
+  <button class="eb" id="eb-contact" type="button">Contact info</button>
+  <button class="eb" id="eb-pw" type="button">Password</button>
+  <button class="eb warn" id="eb-reset" type="button">Reset text edits</button>
+  <button class="eb" id="eb-out" type="button">Log out</button>
+  <span id="eb-status" style="display:flex;gap:6px;flex-wrap:wrap"></span>
+  <span class="hint2" style="width:100%;margin:0">Tip: click any text with a dashed outline to edit it. Press Enter to save.</span>
+</div>
+<div id="toast"></div>
 
 <button id="fab"><span class="dot"></span>Ask Jit AI</button>
 <div id="chat" role="dialog" aria-label="Chat with Jit AI">
@@ -318,11 +389,13 @@ async function boot(){
   C=await (await fetch('/content.json')).json();
   let S=null;
   try{S=await (await fetch('/api/site')).json()}catch(e){}
-  const photo=S&&S.photo?S.photo:'/photo.jpg';
-  ['photo','photo2','chat-photo'].forEach(id=>{$('#'+id).src=photo});
+  if(S&&S.fields)applyFields(C,S.fields);
+  setPhoto(S&&S.photo);
   CREDS=(S&&S.credentials?S.credentials:C.credentials).filter(c=>!c.hidden&&(!c.placeholder||c.file));
   render();
   initReveal();
+  if(TOKEN){try{await enterEdit()}catch(e){}}
+  if(new URLSearchParams(location.search).has('admin')&&!EDIT)openLogin();
 }
 
 function render(){
@@ -330,8 +403,7 @@ function render(){
   $('#roles').innerHTML=C.roles.map(r=>`<span class="chip">${esc(r)}</span>`).join('');
   $('#intro').textContent=C.intro;
   $('#hire').href='mailto:'+C.contact.email;
-  const cv=CREDS.find(c=>c.category==='cv'&&c.file);
-  if(cv){const a=$('#cv');a.href=cv.file;a.style.display='';}
+  updateCV();
   $('#stats').innerHTML=C.stats.map(s=>`<div class="stat"><b data-v="${s.value}" data-d="${s.decimals||0}" data-s="${esc(s.suffix)}">0</b><span>${esc(s.label)}</span></div>`).join('');
   $('#badges').innerHTML=C.badges.map(b=>`<span class="badge">${esc(b)}</span>`).join('');
   $('#about-h').textContent=C.about.heading;
@@ -349,7 +421,7 @@ function render(){
     `<div><small>📍 Location</small>${esc(ct.location)}</div>`
   ].join('');
   renderFilters();renderProjects();renderCreds();
-  countUp();loadLab();
+  countUp();loadLab();markEditable();
   $('#sugs').innerHTML=C.suggestions.map(s=>`<button class="sug" type="button">${esc(s)}</button>`).join('');
   document.querySelectorAll('.sug').forEach(b=>b.onclick=()=>ask(b.textContent));
 }
@@ -358,19 +430,35 @@ function renderFilters(){
   const P=[['all','All'],['ai','AI / ML'],['fullstack','Full-Stack'],['live','Live']];
   $('#pfilters').innerHTML=P.map(([k,l])=>`<button class="fbtn ${PFILTER===k?'on':''}" data-k="${k}">${l}</button>`).join('');
   $('#pfilters').onclick=e=>{const b=e.target.closest('.fbtn');if(b){PFILTER=b.dataset.k;renderFilters();renderProjects();}};
-  const have=new Set(CREDS.filter(c=>c.category!=='cv').map(c=>c.category));
-  const T=[['all','All'],['certificate','Certificates'],['offer','Offer letters'],['letter','Letters'],['award','Awards']].filter(([k])=>k==='all'||have.has(k));
+  const src=credList();
+  const have=new Set(src.map(c=>c.category));
+  const T=[['all','All'],['certificate','Certificates'],['offer','Offer letters'],['letter','Letters'],['award','Awards'],['cv','CV']].filter(([k])=>k==='all'||have.has(k));
+  if(!T.some(([k])=>k===CFILTER))CFILTER='all';
   $('#cfilters').innerHTML=T.map(([k,l])=>`<button class="fbtn ${CFILTER===k?'on':''}" data-k="${k}">${l}</button>`).join('');
   $('#cfilters').onclick=e=>{const b=e.target.closest('.fbtn');if(b){CFILTER=b.dataset.k;renderFilters();renderCreds();}};
 }
+function credList(){return EDIT?ADMCREDS:CREDS.filter(c=>c.category!=='cv');}
 function renderProjects(){
   const list=C.projects.filter(p=>PFILTER==='all'||p.cats.includes(PFILTER));
-  $('#pgrid').innerHTML=list.map(p=>`<article class="card" data-title="${esc(p.title)}"><div class="ic">${p.icon}</div><div class="kind">${esc(p.kind)}</div><h3>${esc(p.title)}</h3><div class="sub">${esc(p.sub)}</div><p>${esc(p.desc)}</p><div class="tags">${p.stack.map(t=>`<span>${esc(t)}</span>`).join('')}</div>${p.link?`<a class="go" href="${esc(p.link.url)}" target="_blank" rel="noopener">${esc(p.link.label)} →</a>`:''}</article>`).join('');
+  $('#pgrid').innerHTML=list.map(p=>`<article class="card" data-i="${C.projects.indexOf(p)}" data-title="${esc(p.title)}"><div class="ic">${p.icon}</div><div class="kind">${esc(p.kind)}</div><h3>${esc(p.title)}</h3><div class="sub">${esc(p.sub)}</div><p>${esc(p.desc)}</p><div class="tags">${p.stack.map(t=>`<span>${esc(t)}</span>`).join('')}</div>${p.link?`<a class="go" href="${esc(p.link.url)}" target="_blank" rel="noopener">${esc(p.link.label)} →</a>`:''}</article>`).join('');
+  markEditable();
 }
 function renderCreds(){
-  const list=CREDS.filter(c=>c.category!=='cv'&&(CFILTER==='all'||c.category===CFILTER));
-  $('#cgrid').innerHTML=list.length?list.map(c=>`<article class="cred" id="cred-${esc(c.id)}"><div class="ic">${esc(c.icon||'🎓')}</div><h3>${esc(c.title)}</h3><div class="iss">${esc(c.issuer)}</div><div class="meta"><span>${esc(c.date)}</span><span class="cat">${esc(CATLABEL[c.category]||c.category)}</span></div><div class="acts">${c.file?`<button class="mini" data-view="${esc(c.id)}">View document</button>`:''}${c.verifyUrl?`<a class="mini" href="${esc(c.verifyUrl)}" target="_blank" rel="noopener">Verify ✓</a>`:''}</div></article>`).join(''):'<div class="empty">Nothing here yet.</div>';
-  $('#cgrid').onclick=e=>{const b=e.target.closest('[data-view]');if(b)openCred(b.dataset.view);};
+  const list=credList().filter(c=>CFILTER==='all'||c.category===CFILTER);
+  $('#cgrid').innerHTML=list.length?list.map(c=>{
+    const ghost=EDIT&&c.placeholder&&!c.file;
+    return `<article class="cred ${ghost?'ghost':''}" id="cred-${esc(c.id)}"><div class="ic">${esc(c.icon||'🎓')}</div><h3>${esc(c.title)}</h3><div class="iss">${esc(c.issuer)}</div>${ghost?'<div class="ghostnote">Not uploaded yet — only you can see this card</div>':''}<div class="meta"><span>${esc(c.date)}</span><span class="cat">${esc(CATLABEL[c.category]||c.category)}</span></div><div class="acts">${c.file?`<button class="mini" data-view="${esc(c.id)}">View document</button>`:''}${c.verifyUrl?`<a class="mini" href="${esc(c.verifyUrl)}" target="_blank" rel="noopener">Verify ✓</a>`:''}${EDIT?`<button class="mini" data-edit="${esc(c.id)}">${c.file?'Edit':'Upload file'}</button><button class="mini danger" data-del="${esc(c.id)}">Delete</button>`:''}</div></article>`;}).join(''):'<div class="empty">Nothing here yet.</div>';
+  $('#cgrid').onclick=async e=>{
+    const v=e.target.closest('[data-view]');if(v)return openCred(v.dataset.view);
+    const ed=e.target.closest('[data-edit]');if(ed)return openDoc(ADMCREDS.find(x=>x.id===ed.dataset.edit));
+    const dl=e.target.closest('[data-del]');
+    if(dl){const c=ADMCREDS.find(x=>x.id===dl.dataset.del);if(!c||!confirm(`Delete “${c.title}” from the public site?`))return;
+      try{const j=await adm('deleteCredential',{id:c.id});syncCreds(j.credentials);toast('Deleted');}catch(err){toast(err.message,true);}}
+  };
+}
+function updateCV(){
+  const cv=(EDIT?ADMCREDS:CREDS).find(c=>c.category==='cv'&&c.file);
+  const a=$('#cv');if(cv){a.href=cv.file;a.style.display='';}else a.style.display='none';
 }
 
 /* ---------- viewer ---------- */
@@ -455,6 +543,7 @@ async function ask(text){
   try{
     const r=await fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:HIST.slice(-10)})});
     const j=await r.json();
+    if(j.offline){const o=localRoute(text);j.reply=o.reply;j.actions=o.actions;}
     t.textContent=j.reply||'Sorry, I could not answer that.';
     HIST.push({role:'assistant',content:t.textContent});
     runActions(j.actions);
@@ -463,6 +552,20 @@ async function ask(text){
   try{sessionStorage.setItem('jitai',JSON.stringify(HIST.slice(-20)))}catch(e){}
 }
 $('#cform').onsubmit=e=>{e.preventDefault();const v=$('#cin').value;$('#cin').value='';ask(v);};
+
+function localRoute(q){
+  q=q.toLowerCase();
+  const R=[[/certif|credential|course|badge/,'credentials','Here are Jit\'s certificates, letters and awards.'],
+  [/offer|letter|appoint|recommend|\blor\b/,'credentials','Here are the offer, appointment and recommendation letters.'],
+  [/project|built|build|github|demo|\bapp\b|\bai\b|\bml\b/,'projects','These are the projects Jit has built.'],
+  [/experience|work|job|role|intern|career|lead|team|\bta\b|recruit|\bhr\b/,'experience','Here is Jit\'s work experience.'],
+  [/skill|tech|stack|python|react|language/,'skills','Here are his technical skills.'],
+  [/avail|notice|join|relocat|hire|\bfit\b|match/,'match','Availability and the fit check are here.'],
+  [/contact|email|reach|linkedin|phone/,'contact','Here is how to reach Jit.'],
+  [/about|who|education|study|college|cgpa/,'about','Here is a bit about Jit.']];
+  for(const [re,t,msg] of R)if(re.test(q))return{reply:msg+' (My AI brain is resting right now, so I am taking you to the closest section.)',actions:[{type:'scroll',target:t}]};
+  return{reply:'My AI brain is resting right now. Please browse the sections above, or email Jit at '+C.contact.email+'.',actions:[]};
+}
 
 /* ---------- JD match ---------- */
 $('#analyze').onclick=async()=>{
@@ -519,6 +622,153 @@ async function loadLab(){
       for(let j=i+1;j<pts.length;j++){const q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy;if(d<9000){x.strokeStyle=`rgba(0,229,255,${.1*(1-d/9000)})`;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke();}}}
     requestAnimationFrame(f);})();
 })();
+
+/* ---------- admin / edit mode ---------- */
+let TOKEN='';try{TOKEN=sessionStorage.getItem('adm')||''}catch(e){}
+let EDIT=false,ADMCREDS=[];
+function toast(m,err){const t=$('#toast');t.textContent=m;t.className=err?'err':'';t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>{t.style.display='none'},err?5000:2400);}
+function setPhoto(u){const x=u||'/photo.jpg';['photo','photo2','chat-photo'].forEach(id=>{const e=document.getElementById(id);if(e)e.src=x});}
+function setByPath(o,path,val){
+  const k=path.split('.');let x=o;for(let i=0;i<k.length-1;i++){x=x&&x[k[i]];if(x==null||typeof x!=='object')return;}
+  const l=k[k.length-1];if(!(l in x))return;const t=typeof x[l];
+  if(t==='number'){const n=Number(val);if(Number.isFinite(n))x[l]=n;}else if(t==='boolean')x[l]=(val===true||val==='true');else x[l]=String(val);
+}
+function applyFields(o,f){Object.entries(f||{}).forEach(([p,v])=>setByPath(o,p,v));}
+async function adm(action,payload={}){
+  const r=await fetch('/api/admin',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action,token:TOKEN,...payload})});
+  let j={};try{j=await r.json()}catch(e){}
+  if(r.status===401&&action!=='login'&&action!=='changePassword'){exitEdit();throw new Error('Session expired — please log in again.');}
+  if(!r.ok)throw new Error(j.error||'Request failed');
+  return j;
+}
+function syncCreds(list){ADMCREDS=list.filter(c=>!c.hidden);CREDS=ADMCREDS.filter(c=>c.category!=='cv'||c.file).filter(c=>!c.placeholder||c.file);renderFilters();renderCreds();updateCV();}
+
+/* login */
+function fm(sel,type,text){const m=$(sel);m.className='fmsg '+type;m.textContent=text;}
+async function openLogin(){
+  if(EDIT){toast('You are already in edit mode ✏️');return;}
+  $('#login-ov').classList.add('show');$('#login-msg').className='fmsg';$('#login-pw').value='';setTimeout(()=>$('#login-pw').focus(),60);
+  try{const s=await adm('status');if(!s.configured.password)fm('#login-msg','warn','Admin is not set up yet: add ADMIN_PASSWORD in Vercel → Settings → Environment Variables, then redeploy.');}catch(e){}
+}
+$('#admin-btn').onclick=openLogin;$('#adm-foot').onclick=openLogin;$('#login-x').onclick=()=>$('#login-ov').classList.remove('show');
+$('#login-ov').onclick=e=>{if(e.target.id==='login-ov')$('#login-x').click();};
+$('#login-pw').onkeydown=e=>{if(e.key==='Enter')$('#login-go').click();};
+$('#login-go').onclick=async()=>{
+  $('#login-go').disabled=true;
+  try{const j=await adm('login',{password:$('#login-pw').value});TOKEN=j.token;try{sessionStorage.setItem('adm',TOKEN)}catch(e){}
+    await enterEdit();$('#login-ov').classList.remove('show');toast('Edit mode is on ✏️');}
+  catch(e){fm('#login-msg','err',e.message);}
+  $('#login-go').disabled=false;
+};
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='a'){e.preventDefault();openLogin();}});
+
+async function enterEdit(){
+  const j=await adm('list');
+  ADMCREDS=j.credentials.filter(c=>!c.hidden);
+  EDIT=true;document.body.classList.add('editing');$('#admin-btn').textContent='✏️ Editing';
+  setPhoto(j.photo);renderFilters();renderCreds();updateCV();markEditable();showStatus();
+}
+function exitEdit(){
+  TOKEN='';try{sessionStorage.removeItem('adm')}catch(e){}
+  const was=EDIT;EDIT=false;document.body.classList.remove('editing');$('#admin-btn').textContent='🔐 Admin';
+  document.querySelectorAll('[data-f]').forEach(e=>{e.removeAttribute('contenteditable');e.removeAttribute('data-f')});
+  if(was){renderFilters();renderCreds();updateCV();}
+}
+async function showStatus(){
+  try{const s=(await adm('status')).configured;
+    $('#eb-status').innerHTML=[['Password',s.password],['Storage',s.blob],['AI chatbot',s.ai]].map(([l,ok])=>`<span class="chipx ${ok?'ok':'no'}">${ok?'✓':'✗'} ${l}</span>`).join('');
+    if(!s.blob)toast('Storage is not connected yet — saving photos/documents will fail until you connect Vercel Blob.',true);
+  }catch(e){}
+}
+$('#eb-out').onclick=()=>{exitEdit();toast('Logged out');};
+
+/* inline text editing */
+function mark(el,path){if(!el)return;el.dataset.f=path;try{el.contentEditable='plaintext-only'}catch(e){el.contentEditable='true'}if(el.contentEditable!=='plaintext-only')el.contentEditable='true';el.spellcheck=false;}
+function markEditable(){
+  if(!EDIT)return;
+  mark($('#intro'),'intro');mark($('#tagline'),'tagline');mark($('#status'),'status');mark($('#about-h'),'about.heading');
+  document.querySelectorAll('#about-p p').forEach((p,i)=>mark(p,'about.paragraphs.'+i));
+  document.querySelectorAll('#stats .stat span').forEach((x,i)=>mark(x,`stats.${i}.label`));
+  document.querySelectorAll('#tl .job').forEach((j,i)=>{mark(j.querySelector('h3'),`experience.${i}.role`);mark(j.querySelector('.org'),`experience.${i}.org`);mark(j.querySelector('.where'),`experience.${i}.where`);mark(j.querySelector('.when'),`experience.${i}.period`);mark(j.querySelector('.jt'),`experience.${i}.tag`);j.querySelectorAll('li').forEach((l,k)=>mark(l,`experience.${i}.points.${k}`));});
+  document.querySelectorAll('#pgrid .card').forEach(c=>{const i=c.dataset.i;mark(c.querySelector('h3'),`projects.${i}.title`);mark(c.querySelector('.sub'),`projects.${i}.sub`);mark(c.querySelector('p'),`projects.${i}.desc`);});
+  document.querySelectorAll('#avail div').forEach((d,i)=>{mark(d.querySelector('small'),`availability.${i}.label`);mark(d.querySelector('b'),`availability.${i}.value`);mark(d.querySelector('span'),`availability.${i}.sub`);});
+}
+document.addEventListener('focusin',e=>{const t=e.target.closest&&e.target.closest('[data-f]');if(t)t.dataset.before=t.textContent;});
+document.addEventListener('focusout',async e=>{
+  const t=e.target.closest&&e.target.closest('[data-f]');if(!t||!EDIT)return;
+  const v=t.textContent.trim(),before=(t.dataset.before||'').trim();if(v===before)return;
+  try{await adm('saveField',{path:t.dataset.f,value:v});setByPath(C,t.dataset.f,v);toast('Saved ✓');}
+  catch(err){t.textContent=before;toast(err.message,true);}
+});
+document.addEventListener('keydown',e=>{if(EDIT&&e.key==='Enter'&&e.target.closest&&e.target.closest('[data-f]')){e.preventDefault();e.target.blur();}});
+
+/* photo */
+function loadImage(file){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error('Could not read that image'));i.src=URL.createObjectURL(file);});}
+function fileToDataUrl(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(new Error('Could not read file'));r.readAsDataURL(file);});}
+$('#cam').onclick=$('#eb-photo').onclick=()=>$('#photo-in').click();
+$('#photo-in').onchange=async()=>{
+  const f=$('#photo-in').files[0];if(!f)return;
+  try{toast('Uploading photo…');const img=await loadImage(f);const s=Math.min(img.width,img.height),out=Math.min(800,s);
+    const c=document.createElement('canvas');c.width=c.height=out;c.getContext('2d').drawImage(img,(img.width-s)/2,(img.height-s)*.25,s,s,0,0,out,out);
+    const j=await adm('setPhoto',{dataUrl:c.toDataURL('image/jpeg',.88)});setPhoto(j.photo);toast('Photo updated ✓');}
+  catch(e){toast(e.message,true);}
+  $('#photo-in').value='';
+};
+
+/* documents */
+const rc=$('#red');let RIMG=null,BOX=[],RK=1,RD=null;
+function resetRed(){RIMG=null;BOX=[];rc.style.display='none';$('#red-tools').style.display='none';$('#pdf-warn').style.display='none';}
+function drawRed(){const x=rc.getContext('2d');x.clearRect(0,0,rc.width,rc.height);x.drawImage(RIMG,0,0,rc.width,rc.height);x.fillStyle='#000';BOX.concat(RD?[RD]:[]).forEach(b=>x.fillRect(b.x*RK,b.y*RK,b.w*RK,b.h*RK));}
+$('#d-file').onchange=async()=>{
+  resetRed();const f=$('#d-file').files[0];if(!f)return;
+  if(f.type==='application/pdf'){$('#pdf-warn').style.display='block';return;}
+  try{RIMG=await loadImage(f);const w=Math.min(520,RIMG.width);RK=w/RIMG.width;rc.width=w;rc.height=Math.round(RIMG.height*RK);rc.style.display='block';$('#red-tools').style.display='flex';drawRed();}catch(e){fm('#doc-msg','err',e.message);}
+};
+function rpos(e){const r=rc.getBoundingClientRect();return{x:(e.clientX-r.left)*(rc.width/r.width)/RK,y:(e.clientY-r.top)*(rc.height/r.height)/RK};}
+rc.onpointerdown=e=>{rc.setPointerCapture(e.pointerId);const p=rpos(e);RD={sx:p.x,sy:p.y,x:p.x,y:p.y,w:0,h:0};};
+rc.onpointermove=e=>{if(!RD)return;const p=rpos(e);RD.x=Math.min(RD.sx,p.x);RD.y=Math.min(RD.sy,p.y);RD.w=Math.abs(p.x-RD.sx);RD.h=Math.abs(p.y-RD.sy);drawRed();};
+rc.onpointerup=()=>{if(RD&&RD.w>4&&RD.h>4)BOX.push({x:RD.x,y:RD.y,w:RD.w,h:RD.h});RD=null;drawRed();};
+$('#red-undo').onclick=()=>{BOX.pop();drawRed();};$('#red-clear').onclick=()=>{BOX=[];drawRed();};
+function exportRedacted(){const m=Math.max(RIMG.width,RIMG.height),k=Math.min(1,1800/m);const c=document.createElement('canvas');c.width=Math.round(RIMG.width*k);c.height=Math.round(RIMG.height*k);const x=c.getContext('2d');x.drawImage(RIMG,0,0,c.width,c.height);x.fillStyle='#000';BOX.forEach(b=>x.fillRect(b.x*k,b.y*k,b.w*k,b.h*k));return c.toDataURL('image/jpeg',.85);}
+function openDoc(c){
+  resetRed();$('#doc-msg').className='fmsg';$('#d-file').value='';
+  $('#doc-h').textContent=c?(c.file?'Edit document':'Upload file for this document'):'Add document';
+  $('#d-id').value=c?c.id:'';$('#d-title').value=c?c.title||'':'';$('#d-issuer').value=c?c.issuer||'':'';$('#d-date').value=c?c.date||'':'';$('#d-cat').value=c?c.category||'certificate':'certificate';$('#d-verify').value=c?c.verifyUrl||'':'';
+  $('#doc-ov').classList.add('show');setTimeout(()=>$('#d-title').focus(),60);
+}
+$('#add-doc').onclick=$('#eb-add').onclick=()=>openDoc(null);
+$('#d-cancel').onclick=()=>$('#doc-ov').classList.remove('show');
+$('#d-save').onclick=async()=>{
+  const title=$('#d-title').value.trim();if(!title)return fm('#doc-msg','err','Please enter a title.');
+  $('#d-save').disabled=true;$('#d-save').textContent='Saving…';
+  try{
+    const p={id:$('#d-id').value||undefined,title,issuer:$('#d-issuer').value,date:$('#d-date').value,category:$('#d-cat').value,verifyUrl:$('#d-verify').value};
+    const f=$('#d-file').files[0];
+    if(f){if(f.type==='application/pdf'){if(f.size>3*1024*1024)throw new Error('That PDF is over 3 MB — compress it first (smallpdf.com works).');p.file={dataUrl:await fileToDataUrl(f)};}else p.file={dataUrl:exportRedacted()};}
+    const j=await adm('saveCredential',p);syncCreds(j.credentials);$('#doc-ov').classList.remove('show');toast('Saved — it is live now ✓');
+  }catch(e){fm('#doc-msg','err',e.message);}
+  $('#d-save').disabled=false;$('#d-save').textContent='Save';
+};
+
+/* contact, password, reset */
+$('#eb-contact').onclick=async()=>{
+  const F=[['contact.email','Email',C.contact.email],['contact.linkedin','LinkedIn URL',C.contact.linkedin],['contact.github','GitHub URL',C.contact.github],['contact.phone','Phone (empty = hide it from the public site)',C.contact.phone||''],['contact.location','Location',C.contact.location]];
+  try{
+    for(const [p,l,cur] of F){const v=prompt(l,cur);if(v===null)break;const nv=v.trim();
+      if(nv!==String(cur)){await adm('saveField',{path:p,value:nv});setByPath(C,p,nv);
+        if(p==='contact.phone'){await adm('saveField',{path:'contact.showPhone',value:nv?'true':'false'});setByPath(C,'contact.showPhone',!!nv);}}}
+    render();toast('Contact info saved ✓');
+  }catch(e){toast(e.message,true);}
+};
+$('#eb-pw').onclick=async()=>{
+  const cur=prompt('Current password');if(cur===null)return;const nw=prompt('New password (at least 10 characters)');if(nw===null)return;
+  try{const j=await adm('changePassword',{current:cur,next:nw});TOKEN=j.token;try{sessionStorage.setItem('adm',TOKEN)}catch(e){}toast('Password changed ✓');}catch(e){toast(e.message,true);}
+};
+$('#eb-reset').onclick=async()=>{
+  if(!confirm('Undo ALL text edits you made on the site and go back to the original text?'))return;
+  try{await adm('resetFields');location.reload();}catch(e){toast(e.message,true);}
+};
+addEventListener('keydown',e=>{if(e.key==='Escape'){$('#login-ov').classList.remove('show');$('#doc-ov').classList.remove('show');}});
 
 boot();
 </script>

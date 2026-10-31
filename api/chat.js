@@ -1,6 +1,6 @@
 import { callClaude, buildKnowledge } from '../lib/ai.js';
 import { readData, rateLimit, clientIp } from '../lib/store.js';
-import { mergeCreds, publicCreds, loadContent } from '../lib/merge.js';
+import { mergeCreds, publicCreds, applyFields, loadContent } from '../lib/merge.js';
 
 const SECTIONS = ['home', 'about', 'experience', 'projects', 'skills', 'credentials', 'match', 'contact'];
 
@@ -21,9 +21,10 @@ export default async function handler(req, res) {
 
   try {
     const [content, data] = await Promise.all([loadContent(req), readData()]);
+    applyFields(content, data.fields);
     const creds = publicCreds(mergeCreds(content.credentials, data.credentials));
     const knowledge = buildKnowledge(content, creds);
-    const system = `You are "Jit AI", the assistant on Jit Das's portfolio website. Visitors are mostly recruiters, hiring managers and collaborators. Jit is not available right now, so you represent him: friendly, confident, concise (max ~90 words unless asked for detail), never boastful beyond the facts.
+    const system = `You are "Jit AI", the assistant on Jit Das's portfolio website. Visitors are mostly recruiters, hiring managers and collaborators. Jit is not available right now, so you represent him. Tone: professional, warm and precise. Length: 2 to 4 sentences (never more than 70 words) unless the visitor explicitly asks for detail. Speak about Jit in the third person. Lead with the direct answer, cite one concrete fact (a project, number, role or certificate), then offer the next step. No filler, no emojis, no exaggeration.
 
 RULES
 - Answer ONLY from the PROFILE below. If something is not there, say you don't have that detail and suggest emailing ${content.contact.email}. Never invent employers, dates, numbers, salaries or phone numbers.
@@ -58,6 +59,6 @@ ${knowledge}`;
     const msg = e.message === 'NO_KEY'
       ? 'The AI assistant is not switched on yet. You can still explore the site or email Jit directly.'
       : 'I could not reach my brain just now. Please try again, or email Jit directly.';
-    return res.status(200).json({ reply: msg, actions: [{ type: 'mail' }] });
+    return res.status(200).json({ reply: msg, actions: [], offline: true });
   }
 }

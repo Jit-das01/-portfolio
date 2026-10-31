@@ -1,34 +1,36 @@
-# Portfolio v2 — one-time setup (≈10 minutes, all in the Vercel dashboard)
+# Portfolio v2 — one-time setup (about 10 minutes, all in the Vercel dashboard)
 
-After you push this code, Vercel redeploys automatically. Three things then need to be switched on.
+Until these steps are done, the chatbot says "not switched on yet" and photo/document uploads will fail.
 
-## 1. Storage (for the admin page: photo, certificates, offer letters)
-Vercel dashboard → your project → **Storage** → **Create Database** → **Blob** → name it anything → **Connect to project** (tick all environments).
-This adds `BLOB_READ_WRITE_TOKEN` for you.
+## 1. Storage (photo, certificates, offer letters, text edits)
+Vercel → your portfolio project → **Storage** → **Create Database** → **Blob** → **Create** → tick **all environments** → **Connect**.
 
 ## 2. Environment variables
-Project → **Settings** → **Environment Variables** → add:
+Project → **Settings** → **Environment Variables** → add all three:
 
 | Name | Value |
 |---|---|
-| `ADMIN_PASSWORD` | the password you'll use at `/admin` (10+ characters) |
-| `SESSION_SECRET` | any long random text — run `openssl rand -hex 32` in Terminal and paste the result |
-| `ANTHROPIC_API_KEY` | key from https://console.anthropic.com → API Keys (powers the chatbot + fit check) |
+| `ADMIN_PASSWORD` | the password you will log in with (10+ characters) |
+| `SESSION_SECRET` | run `openssl rand -hex 32 \| pbcopy` in Terminal, then paste |
+| `ANTHROPIC_API_KEY` | from https://console.anthropic.com → API Keys (set a ~$5 monthly limit there) |
 
-Then **Deployments → ⋯ → Redeploy** so the variables take effect.
+## 3. Redeploy (required, or the variables do nothing)
+Project → **Deployments** → **⋯** on the top row → **Redeploy**.
 
-Tip: in the Anthropic console, set a monthly spend limit (e.g. $5) so the chatbot can never surprise you.
+## 4. Use it
+1. Open your site and click **🔐 Admin** in the top menu (or press Ctrl/⌘ + Shift + A).
+2. Log in. The toolbar shows green ticks for Password, Storage and AI chatbot. A red ✗ tells you exactly what is still missing.
+3. In edit mode:
+   - click any text with a dashed outline, type, press **Enter** (saved instantly)
+   - **📷 Change photo** swaps your display photo
+   - **+ Add document** or the cards marked "not uploaded yet" add certificates, offer letters, awards and your CV (category **CV** turns on Download CV)
+   - **Password** changes your login password; **Log out** ends edit mode
+4. Visitors never see any of the edit controls.
 
-## 3. Use it
-- Admin page: `https://jitdas.vercel.app/admin`
-- Upload your photo, then add offer letters (5 slots marked "to upload" are waiting), and a CV (category **CV**) to turn on the **Download CV** button.
-- You can change the password inside the admin page any time.
+## Not editable from the site (edit `content.json` on GitHub instead)
+Skills lists, adding or removing whole projects or jobs, and credential icons. Edit the file with the pencil icon on GitHub, and Vercel redeploys.
 
-## Editing text (experience, projects, skills)
-Everything the site and the chatbot know about you is in `content.json`. Edit it on GitHub (pencil icon) and Vercel redeploys. The chatbot learns the change automatically.
-
-To show your phone number publicly: in `content.json` set `"phone": "+91…"` and `"showPhone": true`.
-
-## Limits worth knowing
-- Uploads are limited to about 3 MB per file (Vercel's request limit).
-- Everything uploaded is public. Black out salary, phone numbers and addresses on offer letters first — the admin page has a blackout tool for images.
+## Good to know
+- Uploads are limited to about 3 MB each.
+- Everything uploaded is public. Black out salary, phone numbers and addresses first (the upload dialog has a blackout tool for images; PDFs upload exactly as they are).
+- To show your phone publicly, use **Contact info** in edit mode.

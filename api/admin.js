@@ -2,7 +2,7 @@ import {
   readData, writeData, writeConfig, readConfig, hashPassword, checkPassword, issueToken, verifyToken,
   parseDataUrl, put, del, blobReady, rateLimit, clientIp,
 } from '../lib/store.js';
-import { mergeCreds, loadContent } from '../lib/merge.js';
+import { mergeCreds, loadContent, validFieldPath, setPath } from '../lib/merge.js';
 
 const IMG = ['image/jpeg', 'image/png', 'image/webp'];
 const DOC = [...IMG, 'application/pdf'];
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
     if (action === 'list') {
       const content = await loadContent(req);
-      return res.status(200).json({ photo: data.photo || null, credentials: mergeCreds(content.credentials, data.credentials) });
+      return res.status(200).json({ photo: data.photo || null, credentials: mergeCreds(content.credentials, data.credentials), fields: data.fields || {} });
     }
 
     if (action === 'setPhoto') {
@@ -122,6 +122,25 @@ export default async function handler(req, res) {
       if (isSeed) data.credentials.push({ id, hidden: true, file: null, fileType: null });
       await writeData(data);
       return res.status(200).json({ ok: true, credentials: mergeCreds(content.credentials, data.credentials) });
+    }
+
+    if (action === 'saveField') {
+      const path = body.path;
+      if (!validFieldPath(path)) throw new Error('That field cannot be edited.');
+      const value = String(body.value ?? '').replace(/\u0000/g, '').slice(0, 1500);
+      const content = await loadContent(req);
+      if (!setPath(content, path, value)) throw new Error('Invalid value for that field.');
+      data.fields = data.fields || {};
+      if (Object.keys(data.fields).length >= 300 && !(path in data.fields)) throw new Error('Too many edits — reset text edits first.');
+      data.fields[path] = value;
+      await writeData(data);
+      return res.status(200).json({ ok: true });
+    }
+
+    if (action === 'resetFields') {
+      data.fields = {};
+      await writeData(data);
+      return res.status(200).json({ ok: true });
     }
 
     if (action === 'changePassword') {
