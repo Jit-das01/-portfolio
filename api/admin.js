@@ -24,8 +24,23 @@ export default async function handler(req, res) {
 
   try {
     if (action === 'status') {
+      let blob = blobReady();
+      let blobMsg = '';
+      // A real write test, only for a logged-in admin: catches a Private store or a missing connection.
+      if (blob && body.token && (await verifyToken(body.token))) {
+        try {
+          const t = await put('healthcheck.txt', 'ok', { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: 'text/plain' });
+          await del(t.url);
+        } catch (e) {
+          blob = false;
+          blobMsg = /private|access/i.test(e.message || '')
+            ? 'No Public Blob store is connected to this project. Create a Blob store with access set to Public, connect it to this project, then redeploy.'
+            : 'Storage test failed: ' + String(e.message || e).slice(0, 160);
+        }
+      }
       return res.status(200).json({
-        configured: { password: !!process.env.ADMIN_PASSWORD, blob: blobReady(), ai: !!process.env.ANTHROPIC_API_KEY },
+        configured: { password: !!process.env.ADMIN_PASSWORD, blob, ai: !!process.env.ANTHROPIC_API_KEY },
+        blobMsg,
       });
     }
 
