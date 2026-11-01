@@ -675,9 +675,9 @@ function exitEdit(){
   if(was){renderFilters();renderCreds();updateCV();}
 }
 async function showStatus(){
-  try{const s=(await adm('status')).configured;
+  try{const r=await adm('status');const s=r.configured;
     $('#eb-status').innerHTML=[['Password',s.password],['Storage',s.blob],['AI chatbot',s.ai]].map(([l,ok])=>`<span class="chipx ${ok?'ok':'no'}">${ok?'✓':'✗'} ${l}</span>`).join('');
-    if(!s.blob)toast('Storage is not connected yet — saving photos/documents will fail until you connect Vercel Blob.',true);
+    if(!s.blob)toast(r.blobMsg||'Storage is not connected yet — connect Vercel Blob, then redeploy.',true);
   }catch(e){}
 }
 $('#eb-out').onclick=()=>{exitEdit();toast('Logged out');};

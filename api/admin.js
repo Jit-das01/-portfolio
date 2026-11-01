@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         }
       }
       return res.status(200).json({
-        configured: { password: !!process.env.ADMIN_PASSWORD, blob, ai: !!process.env.ANTHROPIC_API_KEY },
+        configured: { password: !!process.env.ADMIN_PASSWORD, blob, ai: !!(process.env.GEMINI_API_KEY || process.env.ANTHROPIC_API_KEY) },
         blobMsg,
       });
     }

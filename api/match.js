@@ -22,7 +22,7 @@ Max 5 matches, max 4 gaps.
 PROFILE
 ${buildKnowledge(content, creds)}`;
 
-    const text = await callClaude({ system, messages: [{ role: 'user', content: `JOB DESCRIPTION:\n${jd}` }], max_tokens: 900 });
+    const text = await callClaude({ system, messages: [{ role: 'user', content: `JOB DESCRIPTION:\n${jd}` }], max_tokens: 900, json: true });
     const json = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
     const out = {
       score: Math.max(0, Math.min(100, Math.round(Number(json.score) || 0))),
